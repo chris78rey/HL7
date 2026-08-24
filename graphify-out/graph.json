@@ -116,16 +116,52 @@
       "source_location": "L50"
     },
     {
+      "id": "mdm_mdm_servidor_his_extract_delimited_text",
+      "label": "extract_delimited_text()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "PDF Data Flow Pipeline",
+      "file_type": "code",
+      "norm_label": "extract_delimited_text()",
+      "source_file": "mdm/mdm_servidor_his.py",
+      "source_location": "L542"
+    },
+    {
       "id": "mdm_mdm_servidor_his_extract_text_from_image",
       "label": "extract_text_from_image()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "HL7 Bidirectional Integration",
+      "community_name": "PDF Data Flow Pipeline",
       "file_type": "code",
       "norm_label": "extract_text_from_image()",
       "source_file": "mdm/mdm_servidor_his.py",
       "source_location": "L537"
+    },
+    {
+      "id": "mdm_mdm_servidor_his_extract_text_from_pdf",
+      "label": "extract_text_from_pdf()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "PDF Data Flow Pipeline",
+      "file_type": "code",
+      "norm_label": "extract_text_from_pdf()",
+      "source_file": "mdm/mdm_servidor_his.py",
+      "source_location": "L515"
+    },
+    {
+      "id": "mdm_mdm_servidor_his_insert_mdm_to_db",
+      "label": "insert_mdm_to_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "PDF Data Flow Pipeline",
+      "file_type": "code",
+      "norm_label": "insert_mdm_to_db()",
+      "source_file": "mdm/mdm_servidor_his.py",
+      "source_location": "L227"
     },
     {
       "id": "mdm_mdm_servidor_his_preprocess_image_for_ocr",
@@ -133,23 +169,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "HL7 Bidirectional Integration",
+      "community_name": "PDF Data Flow Pipeline",
       "file_type": "code",
       "norm_label": "preprocess_image_for_ocr()",
       "source_file": "mdm/mdm_servidor_his.py",
       "source_location": "L528"
-    },
-    {
-      "id": "mdm_mdm_servidor_his_update_informe_txt_in_db",
-      "label": "update_informe_txt_in_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "HL7 Bidirectional Integration",
-      "file_type": "code",
-      "norm_label": "update_informe_txt_in_db()",
-      "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L565"
     },
     {
       "id": "mdm_mdm_servidor_his_parse_mdm_message",
@@ -212,47 +236,11 @@
       "source_location": "L66"
     },
     {
-      "id": "config_db_get_dsn",
-      "label": "get_dsn()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Config and Server Lifecycle",
-      "file_type": "code",
-      "norm_label": "get_dsn()",
-      "source_file": "config_db.py",
-      "source_location": "L13"
-    },
-    {
-      "id": "mdm_mdm_servidor_his_handle_client",
-      "label": "handle_client()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Config and Server Lifecycle",
-      "file_type": "code",
-      "norm_label": "handle_client()",
-      "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L357"
-    },
-    {
-      "id": "mdm_mdm_servidor_his_start_server",
-      "label": "start_server()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Config and Server Lifecycle",
-      "file_type": "code",
-      "norm_label": "start_server()",
-      "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L422"
-    },
-    {
       "id": "mdm_mdm_servidor_his_guardar_pdf_desde_base64",
       "label": "guardar_pdf_desde_base64()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
+      "community": 3,
       "community_name": "Dead PDF Storage Code",
       "file_type": "code",
       "norm_label": "guardar_pdf_desde_base64()",
@@ -264,7 +252,7 @@
       "label": "insert_pdf_file_to_db()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
+      "community": 3,
       "community_name": "Dead PDF Storage Code",
       "file_type": "code",
       "norm_label": "insert_pdf_file_to_db()",
@@ -272,47 +260,47 @@
       "source_location": "L495"
     },
     {
-      "id": "mdm_mdm_servidor_his_extract_delimited_text",
-      "label": "extract_delimited_text()",
+      "id": "mdm_mdm_servidor_his_handle_client",
+      "label": "handle_client()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "MDM PDF Extraction Pipeline",
+      "community": 4,
+      "community_name": "MDM Server & DB Operations",
       "file_type": "code",
-      "norm_label": "extract_delimited_text()",
+      "norm_label": "handle_client()",
       "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L542"
+      "source_location": "L357"
     },
     {
-      "id": "mdm_mdm_servidor_his_extract_text_from_pdf",
-      "label": "extract_text_from_pdf()",
+      "id": "mdm_mdm_servidor_his_start_server",
+      "label": "start_server()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "MDM PDF Extraction Pipeline",
+      "community": 4,
+      "community_name": "MDM Server & DB Operations",
       "file_type": "code",
-      "norm_label": "extract_text_from_pdf()",
+      "norm_label": "start_server()",
       "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L515"
+      "source_location": "L422"
     },
     {
-      "id": "mdm_mdm_servidor_his_insert_mdm_to_db",
-      "label": "insert_mdm_to_db()",
+      "id": "mdm_mdm_servidor_his_update_informe_txt_in_db",
+      "label": "update_informe_txt_in_db()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "MDM PDF Extraction Pipeline",
+      "community": 4,
+      "community_name": "MDM Server & DB Operations",
       "file_type": "code",
-      "norm_label": "insert_mdm_to_db()",
+      "norm_label": "update_informe_txt_in_db()",
       "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L227"
+      "source_location": "L565"
     },
     {
       "id": "mdm_mdm_servidor_his_get_db_connection",
       "label": "get_db_connection()",
       "_callable": true,
       "_origin": "ast",
-      "community": 6,
+      "community": 5,
       "community_name": "DB Connection Layer",
       "file_type": "code",
       "norm_label": "get_db_connection()",
@@ -324,12 +312,24 @@
       "label": "get_mensajes_mdm_ordenados()",
       "_callable": true,
       "_origin": "ast",
-      "community": 6,
+      "community": 5,
       "community_name": "DB Connection Layer",
       "file_type": "code",
       "norm_label": "get_mensajes_mdm_ordenados()",
       "source_file": "mdm/mdm_servidor_his.py",
       "source_location": "L443"
+    },
+    {
+      "id": "config_db_get_dsn",
+      "label": "get_dsn()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "Config and Server Lifecycle",
+      "file_type": "code",
+      "norm_label": "get_dsn()",
+      "source_file": "config_db.py",
+      "source_location": "L13"
     },
     {
       "id": "orm_orm_cliente_envio",
@@ -343,32 +343,10 @@
       "source_location": "L1"
     },
     {
-      "id": "mdm_mdm_servidor_his",
-      "label": "mdm_servidor_his.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "HL7 Bidirectional Integration",
-      "file_type": "code",
-      "norm_label": "mdm_servidor_his.py",
-      "source_file": "mdm/mdm_servidor_his.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "config_db",
-      "label": "config_db.py",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Config and Server Lifecycle",
-      "file_type": "code",
-      "norm_label": "config_db.py",
-      "source_file": "config_db.py",
-      "source_location": "L1"
-    },
-    {
       "id": "mdm_mdm_servidor_his_rationale_482",
       "label": "Decodifica un string base64 y lo guarda como archivo PDF.",
       "_origin": "ast",
-      "community": 4,
+      "community": 3,
       "community_name": "Dead PDF Storage Code",
       "file_type": "rationale",
       "norm_label": "decodifica un string base64 y lo guarda como archivo pdf.",
@@ -379,7 +357,7 @@
       "id": "mdm_mdm_servidor_his_rationale_496",
       "label": "Lee un archivo PDF y lo guarda como base64 en el campo PDF (CLOB) de la base de\u2026",
       "_origin": "ast",
-      "community": 4,
+      "community": 3,
       "community_name": "Dead PDF Storage Code",
       "file_type": "rationale",
       "norm_label": "lee un archivo pdf y lo guarda como base64 en el campo pdf (clob) de la base de...",
@@ -387,10 +365,21 @@
       "source_location": "L496"
     },
     {
+      "id": "mdm_mdm_servidor_his",
+      "label": "mdm_servidor_his.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "MDM Server & DB Operations",
+      "file_type": "code",
+      "norm_label": "mdm_servidor_his.py",
+      "source_file": "mdm/mdm_servidor_his.py",
+      "source_location": "L1"
+    },
+    {
       "id": "mdm_mdm_servidor_his_rationale_436",
       "label": "Establece y devuelve una conexi\u00f3n a la base de datos Oracle.",
       "_origin": "ast",
-      "community": 6,
+      "community": 5,
       "community_name": "DB Connection Layer",
       "file_type": "rationale",
       "norm_label": "establece y devuelve una conexion a la base de datos oracle.",
@@ -401,12 +390,23 @@
       "id": "mdm_mdm_servidor_his_rationale_444",
       "label": "Recupera todos los mensajes de la tabla MENSAJES_MDM, lee los LOBs y devuelve\u2026",
       "_origin": "ast",
-      "community": 6,
+      "community": 5,
       "community_name": "DB Connection Layer",
       "file_type": "rationale",
       "norm_label": "recupera todos los mensajes de la tabla mensajes_mdm, lee los lobs y devuelve...",
       "source_file": "mdm/mdm_servidor_his.py",
       "source_location": "L444"
+    },
+    {
+      "id": "config_db",
+      "label": "config_db.py",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "Config and Server Lifecycle",
+      "file_type": "code",
+      "norm_label": "config_db.py",
+      "source_file": "config_db.py",
+      "source_location": "L1"
     },
     {
       "id": "detener_servidores_hl7",
@@ -517,8 +517,8 @@
       "label": "Integraci\u00f3n HL7 bidireccional HIS-RIS",
       "author": null,
       "captured_at": null,
-      "community": 1,
-      "community_name": "HL7 Bidirectional Integration",
+      "community": 0,
+      "community_name": "ORM Client Core",
       "contributor": null,
       "file_type": "concept",
       "norm_label": "integracion hl7 bidireccional his-ris",
@@ -527,15 +527,29 @@
       "source_url": null
     },
     {
-      "id": "docs_arquitectura_inferida_tablas_independientes",
-      "label": "MENSAJES_MDM y MENSAJES_ORM sin correlaci\u00f3n",
+      "id": "docs_arquitectura_inferida_informe_html_data_flow",
+      "label": "INFORME_HTML data flow",
       "author": null,
       "captured_at": null,
       "community": 1,
-      "community_name": "HL7 Bidirectional Integration",
+      "community_name": "PDF Data Flow Pipeline",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "mensajes_mdm y mensajes_orm sin correlacion",
+      "norm_label": "informe_html data flow",
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "docs_arquitectura_inferida_pdf_processing_chain_hyperedge",
+      "label": "PDF processing chain hyperedge",
+      "author": null,
+      "captured_at": null,
+      "community": 1,
+      "community_name": "PDF Data Flow Pipeline",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "pdf processing chain hyperedge",
       "source_file": "docs/arquitectura_inferida.md",
       "source_location": null,
       "source_url": null
@@ -555,25 +569,11 @@
       "source_url": null
     },
     {
-      "id": "docs_arquitectura_inferida_port_2590_hardcoded",
-      "label": "Puerto 2590 hardcodeado vs config centralizada",
-      "author": null,
-      "captured_at": null,
-      "community": 3,
-      "community_name": "Config and Server Lifecycle",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "puerto 2590 hardcodeado vs config centralizada",
-      "source_file": "docs/arquitectura_inferida.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
       "id": "docs_arquitectura_inferida_codigo_muerto",
       "label": "C\u00f3digo muerto: guardar_pdf_desde_base64 e insert_pdf_file_to_db",
       "author": null,
       "captured_at": null,
-      "community": 4,
+      "community": 3,
       "community_name": "Dead PDF Storage Code",
       "contributor": null,
       "file_type": "concept",
@@ -583,29 +583,29 @@
       "source_url": null
     },
     {
-      "id": "docs_arquitectura_inferida_pdf_extraction_pipeline",
-      "label": "PDF extraction pipeline con fallback OCR",
+      "id": "docs_arquitectura_inferida_tablas_independientes",
+      "label": "MENSAJES_MDM y MENSAJES_ORM sin correlaci\u00f3n",
       "author": null,
       "captured_at": null,
-      "community": 5,
-      "community_name": "MDM PDF Extraction Pipeline",
+      "community": 4,
+      "community_name": "MDM Server & DB Operations",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "pdf extraction pipeline con fallback ocr",
+      "norm_label": "mensajes_mdm y mensajes_orm sin correlacion",
       "source_file": "docs/arquitectura_inferida.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "docs_arquitectura_inferida_mdm_to_ris_pipeline",
-      "label": "MDM to RIS unidirectional pipeline",
+      "id": "docs_arquitectura_inferida_port_2590_hardcoded",
+      "label": "Puerto 2590 hardcodeado vs config centralizada",
       "author": null,
       "captured_at": null,
-      "community": 9,
-      "community_name": "System Architecture",
+      "community": 6,
+      "community_name": "Config and Server Lifecycle",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "mdm to ris unidirectional pipeline",
+      "norm_label": "puerto 2590 hardcodeado vs config centralizada",
       "source_file": "docs/arquitectura_inferida.md",
       "source_location": null,
       "source_url": null
@@ -633,7 +633,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "iniciar_servidores_hl7.sh",
-      "source_location": "L40",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -1303,16 +1303,6 @@
       "weight": 1.0
     },
     {
-      "source": "docs_arquitectura_inferida_ack_not_verified",
-      "target": "orm_orm_cliente_envio_send_mllp_message",
-      "relation": "rationale_for",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "docs/arquitectura_inferida.md",
-      "source_location": null,
-      "weight": 1.0
-    },
-    {
       "source": "docs_arquitectura_inferida_port_2590_hardcoded",
       "target": "mdm_mdm_servidor_his_start_server",
       "relation": "rationale_for",
@@ -1413,9 +1403,79 @@
       "weight": 1.0
     },
     {
-      "source": "docs_arquitectura_inferida_pdf_extraction_pipeline",
+      "source": "docs_arquitectura_inferida_informe_html_data_flow",
+      "target": "docs_arquitectura_inferida_pdf_processing_chain_hyperedge",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_arquitectura_inferida_informe_html_data_flow",
       "target": "mdm_mdm_servidor_his_insert_mdm_to_db",
       "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_arquitectura_inferida_informe_html_data_flow",
+      "target": "mdm_mdm_servidor_his_parse_mdm_message",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_arquitectura_inferida_pdf_processing_chain_hyperedge",
+      "target": "mdm_mdm_servidor_his_extract_delimited_text",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_arquitectura_inferida_pdf_processing_chain_hyperedge",
+      "target": "mdm_mdm_servidor_his_extract_text_from_image",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_arquitectura_inferida_pdf_processing_chain_hyperedge",
+      "target": "mdm_mdm_servidor_his_extract_text_from_pdf",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_arquitectura_inferida_pdf_processing_chain_hyperedge",
+      "target": "mdm_mdm_servidor_his_insert_mdm_to_db",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/arquitectura_inferida.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "mdm_mdm_servidor_his_parse_mdm_message",
+      "target": "mdm_mdm_servidor_his_insert_mdm_to_db",
+      "relation": "shares_data_with",
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "docs/arquitectura_inferida.md",
@@ -1438,5 +1498,5 @@
       "source_file": "docs/arquitectura_inferida.md"
     }
   ],
-  "built_at_commit": "517a9c268d4530223a2152527fdb06648e32a188"
+  "built_at_commit": "482fd3a399fd33cceef6e02287a904e5c70cd1f4"
 }

@@ -90,6 +90,20 @@ La función `insert_mdm_to_db()` (`mdm/mdm_servidor_his.py:274-281`) orquesta un
 - `extract_delimited_text()` (comunidad 6)
 - `get_db_connection()` (comunidad 3, llamada indirectamente vía cx_Oracle.connect)
 
+### 3.4 Flujo de datos del PDF (INFORME_HTML)
+
+El campo `INFORME_HTML` es la variable que transporta el PDF en base64 a través del pipeline. El flujo de datos es:
+
+1. `parse_mdm_message()` (`mdm/mdm_servidor_his.py:53`) extrae el OBX tipo `ED` o `RP` y asigna `campos['INFORME_HTML'] = pdf_base64` (L183). Este es el único punto donde el PDF entra al sistema.
+2. `insert_mdm_to_db()` recibe `campos['INFORME_HTML']` y lo pasa a `extract_text_from_pdf()` como `pdf_bytes` decodificado desde base64 (L268-274). El campo `INFORME_HTML` es escrito directamente a la columna `INFORME_HTML` de `SEGMENTOS_HL7.MENSAJES_MDM` (L334).
+3. El texto extraído se guarda en `INFORME_TXT` (L294, L335).
+
+**Razón de diseño (# WHY):** El PDF nunca se guarda como archivo en el servidor MDM — se procesa en memoria como stream de bytes, se decodifica, se extrae el texto, y el archivo temporal se elimina. Esto evita acumulación de archivos PDF en disco. La extracción de texto se hace como paso previo a la inserción en BD para tener `INFORME_TXT` disponible junto al `INFORME_HTML` original.
+
+### 3.5 Hiperedge: PDF processing chain
+
+Las tres funciones de extracción de texto participan en un hyperedge de tipo `participate_in` con id `pdf_extraction_fallback_chain`, representando la cadena de fallback: PyMuPDF → OCR (OpenCV+Tesseract) → delimitación. Este patrón es compartido por `insert_mdm_to_db()` y no por `guardar_pdf_desde_base64()` (código muerto).
+
 ---
 
 ## 4. Patrones de Diseño Observados
