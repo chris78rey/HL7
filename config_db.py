@@ -3,7 +3,7 @@ import os
 # Configuración de base de datos Oracle
 DB_CONFIG = {
     "user": os.environ.get("ORACLE_USER", "SEGMENTOS_HL7"),
-    "password": os.environ.get("ORACLE_PASSWORD", "SEGMENTOS_HL7"),
+    "password": os.environ.get("ORACLE_PASSWORD", ""),
     "host": os.environ.get("ORACLE_HOST", "172.16.60.21"),
     "port": int(os.environ.get("ORACLE_PORT", 1521)),
     "sid": os.environ.get("ORACLE_SID", "prdsgh2"),
