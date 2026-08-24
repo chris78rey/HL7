@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script para iniciar los servidores HL7
-# Ubicación: /home/integracioneshe1/vscode_proj/HL7FINAL/
+# Ubicación: /home/integracioneshe1/vscode_proj/HL7/
 
 echo "================================================"
 echo "         INICIADOR DE SERVIDORES HL7"
@@ -27,11 +27,22 @@ fi
 check_port() {
     local port=$1
     if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null; then
-        return 0  # Puerto en uso
+        return 0
     else
-        return 1  # Puerto libre
+        return 1
     fi
 }
+
+# Cargar variables del .env si existe (después de funciones para no interferir)
+if [ -f ".env" ]; then
+    echo "Cargando variables de entorno desde .env..."
+    while IFS='=' read -r key value; do
+        [[ "$key" =~ ^#.*$ ]] && continue
+        [[ -z "$key" ]] && continue
+        export "$key=$value"
+    done < .env
+    echo "✅ Variables de entorno cargadas"
+fi
 
 echo ""
 echo "🔍 Verificando puertos..."
@@ -53,7 +64,7 @@ echo "📥 Iniciando servidor MDM HL7 (puerto 2590)..."
 if check_port 2590; then
     echo "   ⚠️  El servidor MDM ya está ejecutándose"
 else
-    nohup python3 mdm/mdm_servidor_his.py > logs/mdm_servidor.log 2>&1 &
+    nohup "$SCRIPT_DIR/venv/bin/python" mdm/mdm_servidor_his.py > logs/mdm_servidor.log 2>&1 &
     MDM_PID=$!
     sleep 2
     if kill -0 $MDM_PID 2>/dev/null; then
@@ -73,7 +84,7 @@ if pgrep -f "orm/orm_cliente_envio.py" > /dev/null; then
     echo "   ⚠️  El cliente ORM ya está ejecutándose"
     echo "   PID actual: $(pgrep -f 'orm/orm_cliente_envio.py')"
 else
-    nohup python3 orm/orm_cliente_envio.py > logs/orm_cliente.log 2>&1 &
+    nohup "$SCRIPT_DIR/venv/bin/python" orm/orm_cliente_envio.py > logs/orm_cliente.log 2>&1 &
     ORM_PID=$!
     sleep 2
     if kill -0 $ORM_PID 2>/dev/null; then

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script para detener los servidores HL7
-# Ubicación: /home/integracioneshe1/vscode_proj/HL7FINAL/
+# Ubicación: /home/integracioneshe1/vscode_proj/HL7/
 
 echo "================================================"
 echo "        DETENIENDO SERVIDORES HL7"
