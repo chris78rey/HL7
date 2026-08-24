@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial Pruebas Sistema HL7 MDM/ORM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.0/open-dyslexic.min.css">
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f9fa; color: #222; margin: 0; padding: 0; font-size: 14px; }
+    .container { max-width: 950px; margin: 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 16px #0002; padding: 36px; font-size: 0.97em; }
+    h1 { color: #1a73e8; font-size: 2em; margin-bottom: 0.5em; }
+    h2 { color: #1a73e8; font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.7em; }
+    .tabs { display: flex; border-bottom: 2px solid #e0e0e0; margin-bottom: 24px; }
+    .tab { padding: 12px 32px; cursor: pointer; background: #f1f3f4; color: #1a73e8; border: none; border-radius: 12px 12px 0 0; margin-right: 8px; font-size: 1.1em; transition: background 0.2s; }
+    .tab.active { background: #fff; color: #222; border-bottom: 4px solid #1a73e8; font-weight: bold; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .breadcrumbs { font-size: 0.95em; color: #888; margin-bottom: 18px; }
+    .breadcrumbs span { color: #1a73e8; cursor: pointer; }
+    .proc-mdm { background: #e3f2fd; border-left: 6px solid #43a047; padding: 24px 28px; border-radius: 12px; margin-bottom: 32px; }
+    .proc-util { background: #f3e5f5; border-left: 6px solid #fb8c00; padding: 24px 28px; border-radius: 12px; margin-bottom: 32px; }
+    .step { margin-bottom: 32px; position: relative; }
+    .step-number { display: inline-block; background: #1a73e8; color: #fff; border-radius: 50%; width: 26px; height: 26px; text-align: center; line-height: 26px; font-weight: bold; margin-right: 12px; }
+    .step .fa { position: absolute; left: -40px; top: 0; font-size: 1.1em; }
+    code, pre { font-size: 0.95em; background: #f1f3f4; color: #c7254e; border-radius: 4px; padding: 2px 6px; }
+    pre { display: block; padding: 12px; overflow-x: auto; margin-bottom: 0; }
+    .tip { background: #e3f2fd; border-left: 4px solid #1a73e8; padding: 10px 16px; margin: 16px 0; border-radius: 6px; }
+    .success { color: #388e3c; font-weight: bold; }
+    ul { margin-top: 0; }
+    .os-block { margin-bottom: 10px; }
+    .os-title { font-weight: bold; color: #1765c1; }
+    .copy-btn { background: #1a73e8; color: #fff; border: none; border-radius: 4px; padding: 4px 10px; margin-left: 8px; cursor: pointer; font-size: 0.95em; }
+    .copy-btn:active { background: #388e3c; }
+    .back-to-top { display: block; margin: 24px auto 0 auto; background: #1a73e8; color: #fff; border: none; border-radius: 20px; padding: 8px 24px; font-size: 0.95em; cursor: pointer; }
+    .back-to-top:hover { background: #1765c1; }
+    .dyslexia-btn, .contrast-btn, .spacing-btn {
+      background: #ffd600;
+      color: #222;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 16px;
+      margin-right: 10px;
+      font-size: 0.95em;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .dyslexia-btn.active, .contrast-btn.active, .spacing-btn.active {
+      background: #1a73e8;
+      color: #fff;
+    }
+    .accessibility-bar {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .accessibility-info {
+      font-size: 0.93em;
+      color: #555;
+      margin-left: 10px;
+    }
+    body.dyslexia-font, .dyslexia-font * {
+      font-family: 'OpenDyslexic', Arial, sans-serif !important;
+    }
+    body.extra-spacing, .extra-spacing * {
+      letter-spacing: 0.08em !important;
+      line-height: 1.7 !important;
+    }
+    body.high-contrast, .high-contrast * {
+      background: #000 !important;
+      color: #fff !important;
+      border-color: #fff !important;
+    }
+    body.high-contrast .container {
+      background: #222 !important;
+      box-shadow: 0 2px 16px #fff2;
+    }
+    body.high-contrast .tab.active {
+      background: #000 !important;
+      color: #ffd600 !important;
+      border-bottom: 4px solid #ffd600 !important;
+    }
+    body.high-contrast .tab {
+      background: #222 !important;
+      color: #ffd600 !important;
+    }
+    body.high-contrast .copy-btn, body.high-contrast .back-to-top {
+      background: #ffd600 !important;
+      color: #000 !important;
+    }
+    body.high-contrast .step-number {
+      background: #ffd600 !important;
+      color: #000 !important;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 10px; font-size: 0.95em; }
+      .tab { font-size: 0.95em; }
+      h1 { font-size: 1.3em; }
+      h2 { font-size: 1em; }
+    }
+  </style>
+  <script>
+    function showTab(tabId) {
+      var tabs = document.querySelectorAll('.tab');
+      var contents = document.querySelectorAll('.tab-content');
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      document.getElementById('content-' + tabId).classList.add('active');
+      let label = '';
+      if(tabId === 'mdm') label = 'Pruebas MDM';
+      else if(tabId === 'orm') label = 'Pruebas ORM';
+      else label = 'Utilidades y Validación';
+      document.getElementById('breadcrumbs').innerHTML =
+        '<span onclick="showTab(\'' + tabId + '\')">Inicio</span> / ' + label;
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    function copyToClipboard(element) {
+      const text = element.previousElementSibling.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        element.innerText = "¡Copiado!";
+        setTimeout(() => { element.innerText = "Copiar"; }, 1200);
+      });
+    }
+    function toggleDyslexiaFont(btn) {
+      document.body.classList.toggle('dyslexia-font');
+      btn.classList.toggle('active');
+    }
+    function toggleExtraSpacing(btn) {
+      document.body.classList.toggle('extra-spacing');
+      btn.classList.toggle('active');
+    }
+    function toggleHighContrast(btn) {
+      document.body.classList.toggle('high-contrast');
+      btn.classList.toggle('active');
+    }
+    window.onload = function() { showTab('mdm'); };
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fa fa-book-medical"></i> Tutorial de Pruebas del Sistema HL7 MDM/ORM</h1>
+    <div class="accessibility-bar">
+      <button class="dyslexia-btn" onclick="toggleDyslexiaFont(this)"><i class="fa fa-eye"></i> Fuente Disléxica</button>
+      <button class="spacing-btn" onclick="toggleExtraSpacing(this)"><i class="fa fa-text-height"></i> Espaciado Extra</button>
+      <button class="contrast-btn" onclick="toggleHighContrast(this)"><i class="fa fa-adjust"></i> Fondo Oscuro / Alto Contraste</button>
+      <span class="accessibility-info">Puedes alternar fondo claro u oscuro según tu preferencia visual o necesidades de dislexia.</span>
+    </div>
+    <div class="tabs">
+      <button class="tab" id="tab-orm" onclick="showTab('orm')"><i class="fa fa-vials"></i> ORM</button>
+      <button class="tab" id="tab-mdm" onclick="showTab('mdm')"><i class="fa fa-file-medical"></i> MDM</button>
+      <button class="tab" id="tab-util" onclick="showTab('util')"><i class="fa fa-tools"></i> Utilidades</button>
+    </div>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <div class="tab-content" id="content-mdm">
+      <div class="proc-mdm">
+        <h2><i class="fa fa-file-medical"></i> Pruebas de Procesos MDM</h2>
+        <div class="step">
+          <span class="step-number">1</span>
+          <b>Preparar el entorno</b>
+          <ul>
+            <li>Abre una terminal en la carpeta del proyecto <code>HL7FINAL</code>.</li>
+            <li>Crea y activa un entorno virtual (recomendado):</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>python3 -m venv venv
+source venv/bin/activate</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>python -m venv venv
+venv\Scripts\activate</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <ul>
+            <li>Instala las dependencias:</li>
+          </ul>
+          <pre>pip install -r requirements.txt
+pip install PyQt5</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <b>Iniciar el servidor MLLP del HIS (recibe cualquier mensaje HL7)</b>
+          <ul>
+            <li>En una terminal, activa el entorno virtual y ejecuta:</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>source venv/bin/activate
+python3 mllp_his/servidor_mllp_his.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>venv\Scripts\activate
+python mllp_his/servidor_mllp_his.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="tip">Este servidor ahora recibe <b>cualquier tipo de mensaje HL7</b> (MDM, ORM, etc.) enviado al HIS, usando la configuración <code>MLLP_HIS</code> de <code>config_db.py</code>.<br>
+          <b>IP configurada para RIS/PACS:</b> <code>172.16.60.71</code> (ver <code>config_db.py</code>).</div>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <b>Enviar mensajes MDM de prueba al HIS</b>
+          <ul>
+            <li>Abre otra terminal, activa el entorno virtual y ejecuta el cliente MDM:</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>source venv/bin/activate
+python3 mdm/mdm_cliente_envio.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>venv\Scripts\activate
+python mdm\mdm_cliente_envio.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="tip">El cliente MDM envía mensajes HL7 MDM^T02 al servidor HIS usando la configuración <code>MLLP_HIS</code>. Observa los mensajes y ACKs en ambas terminales.</div>
+        </div>
+        <div class="step">
+          <span class="step-number">4</span>
+          <b>Verificar los mensajes en la base de datos</b>
+          <ul>
+            <li>Conéctate a Oracle y ejecuta:</li>
+          </ul>
+          <pre>SELECT * FROM SEGMENTOS_HL7.MENSAJES_MDM ORDER BY ID DESC;</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          <div class="tip">Confirma que los mensajes recibidos se almacenan correctamente.</div>
+        </div>
+        <div class="tip">
+          <b>¿Qué es un mensaje MDM^T02?</b><br>
+          El mensaje HL7 MDM^T02 se utiliza para transmitir documentos médicos, informes y archivos (por ejemplo, PDF en base64) entre sistemas HIS y RIS/PACS.
+        </div>
+        <div class="step">
+          <span class="step-number">Ejemplo</span>
+          <b>Ejemplo de mensaje HL7 MDM^T02</b>
+          <pre>MSH|^~\&|SISTEMA|SISTEMA|VMGESTION|VMGESTION|20240620100000||MDM^T02|123456789|P|2.7|||||||UNICODE UTF-8
+PID|||12345678^^^^DNI||PEREZ^JUAN|GOMEZ|19800101|M|||AV. SIEMPRE VIVA 123||1122334455|
+OBR|1|78910||RX001^RADIOGRAFÍA DE TÓRAX|||20240620100000|||||||||||||||||CR
+OBX|1|ED|PDF^Informe|1|JVBERi0xLjQKJcfs... (PDF en base64) ...==|...|
+</pre>
+        </div>
+        <div class="tip">
+          <b>Tips de integración y errores comunes:</b>
+          <ul>
+            <li>El campo OBX-5 puede contener archivos PDF en base64.</li>
+            <li>Verifica que el PDF se almacene correctamente en Oracle (campo CLOB).</li>
+            <li>Revisa el ACK recibido para confirmar la recepción exitosa.</li>
+            <li>Si no recibes ACK, revisa el puerto, firewall o formato del mensaje.</li>
+            <li>Consulta la estructura de la tabla <b>MENSAJES_MDM</b> en el README para mapear los campos.</li>
+          </ul>
+        </div>
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Volver arriba</button>
+      </div>
+    </div>
+    <div class="tab-content" id="content-util">
+      <div class="proc-util">
+        <h2><i class="fa fa-tools"></i> Utilidades y Validación</h2>
+        <div class="step">
+          <span class="step-number">1</span>
+          <b>Validar mensajes HL7 manualmente</b>
+          <ul>
+            <li>Activa el entorno virtual y ejecuta el validador gráfico:</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>source venv/bin/activate
+python3 validador_hl7.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>venv\Scripts\activate
+python validador_hl7.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="tip">Pega un mensaje HL7 para validarlo, autocorregirlo o compararlo con ejemplos.</div>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <b>Detener procesos de prueba</b>
+          <ul>
+            <li>Para finalizar los procesos de prueba, puedes usar:</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>./kill_mllp_siu_mdm.sh</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>taskkill /IM python.exe /F</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="tip">En Windows, puedes cerrar los procesos Python desde el Administrador de tareas o usando el comando anterior (esto detiene todos los scripts Python activos).</div>
+          <div class="success">¡Listo! Has completado las pruebas básicas del sistema HL7 MDM/ORM.</div>
+        </div>
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Volver arriba</button>
+      </div>
+    </div>
+    <div class="tab-content" id="content-orm">
+      <div class="proc-mdm">
+        <h2><i class="fa fa-vials"></i> Pruebas de Procesos ORM</h2>
+        <div class="step">
+          <span class="step-number">1</span>
+          <b>Iniciar el servidor MLLP del RIS/PACS (recibe cualquier mensaje HL7)</b>
+          <ul>
+            <li>En una terminal, activa el entorno virtual y ejecuta:</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>source venv/bin/activate
+python3 mllp_rispacs/servidor_mllp_rispacs.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>venv\Scripts\activate
+python mllp_rispacs/servidor_mllp_rispacs.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="tip">Este servidor ahora recibe <b>cualquier tipo de mensaje HL7</b> (ORM, MDM, etc.) enviado al RIS/PACS, usando la configuración <code>MLLP_RISPACS</code> de <code>config_db.py</code>.</div>
+        </div>
+        <div class="step">
+          <span class="step-number">2</span>
+          <b>Enviar mensajes ORM de prueba al RIS/PACS</b>
+          <ul>
+            <li>Abre otra terminal, activa el entorno virtual y ejecuta el cliente ORM:</li>
+          </ul>
+          <div class="os-block">
+            <span class="os-title">Linux/Mac:</span>
+            <pre>source venv/bin/activate
+python3 orm/orm_cliente_envio.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="os-block">
+            <span class="os-title">Windows (CMD):</span>
+            <pre>venv\Scripts\activate
+python orm\orm_cliente_envio.py</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          </div>
+          <div class="tip">El cliente ORM envía mensajes HL7 ORM^O01 al servidor RIS/PACS usando la configuración <code>MLLP_RISPACS</code>.<br>
+          <b>IP configurada para RIS/PACS:</b> <code>172.16.60.71</code> (ver <code>config_db.py</code>). Observa los mensajes y ACKs en ambas terminales.</div>
+        </div>
+        <div class="step">
+          <span class="step-number">3</span>
+          <b>Verificar los mensajes en la base de datos</b>
+          <ul>
+            <li>Conéctate a Oracle y ejecuta:</li>
+          </ul>
+          <pre>SELECT * FROM SEGMENTOS_HL7.MENSAJES_ORM ORDER BY ID DESC;</pre><button class="copy-btn" onclick="copyToClipboard(this)">Copiar</button>
+          <div class="tip">Confirma que los mensajes ORM enviados y recibidos se almacenan correctamente.</div>
+        </div>
+        <div class="tip">
+          <b>¿Qué es un mensaje ORM^O01?</b><br>
+          El mensaje HL7 ORM^O01 se utiliza para transmitir órdenes médicas y solicitudes de estudios. Es el estándar para la integración entre sistemas HIS y RIS/PACS.
+        </div>
+        <div class="step">
+          <span class="step-number">Ejemplo</span>
+          <b>Ejemplo de mensaje HL7 ORM^O01</b>
+          <pre>MSH|^~\&|SISTEMA|SISTEMA|VMGESTION|VMGESTION|20240620100000||ORM^O01|123456789|P|2.7|||||||UNICODE UTF-8
+PID|||12345678^^^^DNI||PEREZ^JUAN|GOMEZ|19800101|M|||AV. SIEMPRE VIVA 123||1122334455|
+PV1||O||||||12345^LOPEZ^CARLOS|||||||||||78910
+IN1|1|PLAN_OSDE||OSDE
+ORC|NW|78910|||||20240620100000|
+OBR|1|78910||RX001^RADIOGRAFÍA DE TÓRAX|||20240620100000|||||||||||||||||CR</pre>
+        </div>
+        <div class="tip">
+          <b>Tips de integración y errores comunes:</b>
+          <ul>
+            <li>El servidor dump es solo para pruebas. En producción, el destino será el RIS/PACS.</li>
+            <li>Verifica siempre el ACK recibido para confirmar la recepción exitosa.</li>
+            <li>Revisa que los datos enviados correspondan a una orden real y completa.</li>
+            <li>Si no recibes ACK, revisa el puerto, firewall o formato del mensaje.</li>
+            <li>Consulta la estructura de la tabla <b>MENSAJES_ORM</b> en el README para mapear los campos.</li>
+          </ul>
+        </div>
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Volver arriba</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

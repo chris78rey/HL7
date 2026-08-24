@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reglas de Firewall para Integración HL7 MLLP</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; }
+        h1, h2, h3 { color: #2c3e50; }
+        pre, code { background: #f4f4f4; padding: 0.5em; border-radius: 4px; }
+        ul { margin-bottom: 1em; }
+        .box { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 1em; margin-bottom: 2em; }
+    </style>
+</head>
+<body>
+    <h1>Reglas de Firewall para Integración HL7 MLLP</h1>
+    <div class="box">
+        <h2>Configuración recomendada (según tu entorno)</h2>
+        <ul>
+            <li><b>IP del cliente ORM:</b> 172.16.60.74</li>
+            <li><b>IP del servidor RIS/PACS:</b> 172.16.60.71</li>
+            <li><b>Puerto MLLP:</b> 6661</li>
+        </ul>
+    </div>
+    <div class="box">
+        <h2>Reglas de firewall en pseudocódigo</h2>
+        <pre><code># En el servidor RIS/PACS (destino HL7)
+PERMITIR ENTRADA TCP DESDE 172.16.60.74 AL PUERTO 6661
+PERMITIR SALIDA TCP HACIA 172.16.60.74 DESDE EL PUERTO 6661
+PERMITIR TRÁFICO RELACIONADO/ESTABLECIDO
+
+# En la red intermedia (firewall, router, etc.)
+PERMITIR PASO TCP DESDE 172.16.60.74 HACIA 172.16.60.71 PUERTO 6661
+PERMITIR PASO TCP DESDE 172.16.60.71 HACIA 172.16.60.74 PUERTO 6661
+PERMITIR TRÁFICO RELACIONADO/ESTABLECIDO
+
+# En el cliente HL7 (origen)
+PERMITIR SALIDA TCP HACIA 172.16.60.71 AL PUERTO 6661
+PERMITIR ENTRADA TCP DESDE 172.16.60.71 DESDE EL PUERTO 6661
+PERMITIR TRÁFICO RELACIONADO/ESTABLECIDO
+</code></pre>
+        <p><b>Notas:</b></p>
+        <ul>
+            <li>"TRÁFICO RELACIONADO/ESTABLECIDO" significa permitir respuestas a conexiones ya permitidas.</li>
+            <li>Aplica estas reglas en todos los puntos de la ruta para evitar bloqueos de mensajes o ACKs.</li>
+        </ul>
+    </div>
+    <div class="box">
+        <h2>Diagnóstico de problemas de ACK y uso de las reglas</h2>
+        <ol>
+            <li><b>En el servidor RIS/PACS</b>
+                <ul>
+                    <li>Verifica que la regla "PERMITIR ENTRADA TCP DESDE 172.16.60.74 AL PUERTO 6661" esté activa.</li>
+                    <li>Verifica que la regla "PERMITIR SALIDA TCP HACIA 172.16.60.74 DESDE EL PUERTO 6661" esté activa.</li>
+                    <li>Asegúrate de que el proceso MLLP esté escuchando en el puerto correcto.</li>
+                    <li>Revisa logs del servidor para ver si el mensaje fue recibido y si el ACK fue generado.</li>
+                </ul>
+            </li>
+            <li><b>En la red intermedia (firewall, router, etc.)</b>
+                <ul>
+                    <li>Verifica que el tráfico TCP pase en ambos sentidos entre cliente y servidor en el puerto 6661.</li>
+                    <li>Si hay NAT, asegúrate de que las respuestas se enruten correctamente.</li>
+                    <li>Si hay inspección de paquetes, asegúrate de que no se bloqueen paquetes de respuesta.</li>
+                </ul>
+            </li>
+            <li><b>En el cliente HL7</b>
+                <ul>
+                    <li>Verifica que la regla "PERMITIR SALIDA TCP HACIA 172.16.60.71 AL PUERTO 6661" esté activa.</li>
+                    <li>Verifica que la regla "PERMITIR ENTRADA TCP DESDE 172.16.60.71 DESDE EL PUERTO 6661" esté activa.</li>
+                    <li>Usa herramientas como <code>tcpdump</code> o <code>wireshark</code> para ver si el ACK llega a la interfaz de red.</li>
+                    <li>Si el ACK llega a la red pero no a la aplicación, revisa firewalls locales o problemas de redirección.</li>
+                </ul>
+            </li>
+        </ol>
+        <h3>Consejos generales</h3>
+        <ul>
+            <li>Usa <code>telnet 172.16.60.71 6661</code> para probar conectividad básica.</li>
+            <li>Usa <code>tcpdump</code> o <code>wireshark</code> en cliente y servidor para ver si el ACK sale y llega.</li>
+            <li>Consulta logs de firewall para ver si algún paquete es bloqueado.</li>
+            <li>Si hay balanceadores o proxies, revisa sus reglas y registros.</li>
+        </ul>
+        <b>Resumen:</b>
+        <ul>
+            <li>Aplica y revisa las reglas en todos los puntos.</li>
+            <li>El bloqueo del ACK puede estar en el servidor, la red intermedia o el cliente.</li>
+            <li>El diagnóstico debe ser paso a paso, verificando cada eslabón de la cadena.</li>
+        </ul>
+    </div>
+</body>
+</html>

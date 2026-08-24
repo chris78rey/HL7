@@ -1,0 +1,43 @@
+# Environment
+.env
+
+# Logs
+logs/
+*.log
+error_orm_servidor_dump.log
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Build artifacts
+*.zip
+*.tar.gz
+*.bin
+*.exe
+*.pdf
+informe_mdm.pdf
+
+# IDE
+.vscode/
+.idea/
+
+# Test outputs
+pdfs_extraidos/
+test_obr.hl7
+ultimo_mdm_recibido.hl7
+ejemplo_mdm_hl7.txt
+ejemplos_hl7.txt
+
+# HL7 files
+*.hl7
+
+# PIDs
+*.pid
+pids/
+
+# Proyecto context
+llm_project_context.md
+detalles.md
+repomix*.md
