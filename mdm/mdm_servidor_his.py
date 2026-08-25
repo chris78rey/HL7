@@ -552,10 +552,11 @@ def extract_delimited_text(text):
         start += len("informe")
         contenido = text[start:end]
         
-        # Eliminar las palabras específicas
-        contenido = contenido.lower().replace("hospital de especialidades", "")
-        contenido = contenido.lower().replace("ff.aa nº 1", "")
-        
+        # Eliminar las palabras específicas sin destruir el caso original
+        import re
+        contenido = re.sub(r"hospital de especialidades", "", contenido, flags=re.IGNORECASE)
+        contenido = re.sub(r"ff\.aa nº 1", "", contenido, flags=re.IGNORECASE)
+
         lineas = [line.strip() for line in contenido.splitlines()]
         # Solo incluir líneas que no estén vacías después de quitar espacios
         lineas = [line for line in lineas if line]
