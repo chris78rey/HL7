@@ -7,7 +7,7 @@ import datetime
 import sys
 import os
 import base64
-import fitz  # PyMuPDF
+import pymupdf  # PyMuPDF
 import cv2
 import numpy as np
 from PIL import Image
@@ -273,7 +273,7 @@ def insert_mdm_to_db(campos, raw_message):
                                 tmp_pdf_path = tmpf.name
                             text_pdf = extract_text_from_pdf(tmp_pdf_path)
                             if not text_pdf:
-                                doc = fitz.open(tmp_pdf_path)
+                                doc = pymupdf.open(tmp_pdf_path)
                                 page = doc.load_page(0)
                                 pix = page.get_pixmap()
                                 img_bytes = pix.tobytes("png")
@@ -513,7 +513,7 @@ def insert_pdf_file_to_db(pdf_path, id_unico_msg):
         print(f"[ERROR] No se pudo almacenar el PDF en la base de datos: {e}")
 
 def extract_text_from_pdf(pdf_path):
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     all_text = []
     for page_num in range(doc.page_count):
         page = doc.load_page(page_num)
@@ -606,8 +606,8 @@ def update_informe_txt_in_db(id_unico_msg, informe_txt):
 #             # --- NUEVO: extraer texto y guardar en INFORME_TXT ---
 #             text_pdf = extract_text_from_pdf(nombre_archivo)
 #             if not text_pdf:
-#                 import fitz
-#                 doc = fitz.open(nombre_archivo)
+#                 import pymupdf
+#                 doc = pymupdf.open(nombre_archivo)
 #                 page = doc.load_page(0)
 #                 pix = page.get_pixmap()
 #                 img_bytes = pix.tobytes("png")
