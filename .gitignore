@@ -36,11 +36,13 @@ ejemplos_hl7.txt
 # PIDs
 *.pid
 pids/
+telegram_admins.json
 
 # Proyecto context
 llm_project_context.md
 detalles.md
 repomix*.md
+repomix-output.xml
 
 # Graphify outputs (track specific files, ignore rest)
 graphify-out/*

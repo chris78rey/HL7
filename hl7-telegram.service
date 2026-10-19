@@ -1,0 +1,19 @@
+[Unit]
+Description=Bot de control HL7 por Telegram
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=integracioneshe1
+Group=integracioneshe1
+WorkingDirectory=/home/integracioneshe1/vscode_proj/HL7
+ExecStart=/home/integracioneshe1/vscode_proj/HL7/venv/bin/python -u /home/integracioneshe1/vscode_proj/HL7/bot_telegram.py
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+Environment=LD_LIBRARY_PATH=/home/integracioneshe1/oracle_client/instantclient_19_27:/home/integracioneshe1/ic/instantclient_12_2
+Environment=TNS_ADMIN=/home/integracioneshe1/oracle_client/instantclient_19_27/network/admin
+
+[Install]
+WantedBy=multi-user.target
