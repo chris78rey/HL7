@@ -1,1 +1,17 @@
-{"0": "ORM Client Core", "1": "PDF Data Flow Pipeline", "2": "HL7 Message Validation", "3": "Dead PDF Storage Code", "4": "MDM Server & DB Operations", "5": "DB Connection Layer", "6": "Config and Server Lifecycle", "7": "HL7 Service Stop", "8": "HL7 Service Start"}
+{
+  "0": "orm_cliente_envio.py",
+  "1": "bot_telegram.py",
+  "2": "insert_mdm_to_db",
+  "3": "guardar_pdf_desde_base64",
+  "4": "button",
+  "5": "DB Connection Layer",
+  "6": "Panel de control HL7 por Telegram",
+  "7": "detener_servidores_hl7.sh",
+  "8": "iniciar_servidores_hl7.sh",
+  "9": "show_panel",
+  "10": "receive_user_id",
+  "11": "build_application",
+  "12": "mdm_servidor_his.py",
+  "13": "Integración Telegram y operación automática HL7",
+  "14": "config_db.py"
+}
